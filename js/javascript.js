@@ -1,9 +1,6 @@
 console.log("Hij doet het!!")
 
 /*----- constants -----*/
-let board;
-let turn = 'X';
-let win;
 const winningCombinations = [
     [0, 1, 2],
     [3, 4, 5],
@@ -16,6 +13,9 @@ const winningCombinations = [
 ];
 
 /*----- app's state (variables) -----*/
+let board;
+let turn = 'X';
+let win;
 
 /*----- cached element references -----*/
 const squares = Array.from(document.querySelectorAll('#speelbord div'));
@@ -24,6 +24,8 @@ const messages = document.querySelector('h2');
 console.log(squares);
 /*----- event listeners -----*/
 document.getElementById('speelbord').addEventListener('click', handleTurn);
+
+document.getElementById('reset-button').addEventListener('click', init);
 /*----- functions -----*/
 
 function init() {
@@ -44,9 +46,13 @@ function render() {
     });
 
     if (turn === 'X') {
-        messages.textContent = win ? `${win} heeft gewonnen!` : `Het is de beurt aan het ${turn}-je!`;
+        if (win === 'T') { messages.textContent = 'het is gelijkspel!' } else {
+            messages.textContent = win ? `${win} heeft gewonnen!` : `Het is de beurt aan het ${turn}-je!`;
+        }
     } else {
-        messages.textContent = win ? `${win} heeft gewonnen!` : `Het is de beurt aan het ${turn}-tje!`;
+        if (win === 'T') { messages.textContent = 'het is gelijkspel!' } else {
+            messages.textContent = win ? `${win} heeft gewonnen!` : `Het is de beurt aan het ${turn}-tje!`;
+        }
     }
 
 }
@@ -76,6 +82,6 @@ function getWinner() {
             winner = board[combination[0]];
     });
     console.log(winner);
-    return winner;
+    return winner ? winner : board.includes('') ? null : 'T';
 
 }
