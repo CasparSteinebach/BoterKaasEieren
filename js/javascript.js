@@ -40,7 +40,7 @@ init();
 function render() {
     board.forEach(function(mark, index) {
         squares[index].textContent = mark;
-        console.log(mark, squares[index]);
+        //console.log(mark, squares[index]);
     });
 
     if (turn === 'X') {
@@ -52,7 +52,7 @@ function render() {
 }
 
 function handleTurn(event) {
-    console.log("hij klikt")
+    //console.log("hij klikt")
     let idx =
         squares.findIndex(function(square) {
             return square === event.target;
@@ -63,7 +63,6 @@ function handleTurn(event) {
     turn = turn === 'X' ? 'O' : 'X';
 
     win = getWinner();
-    console.log(win);
     render();
 
 };
