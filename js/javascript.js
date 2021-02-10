@@ -16,15 +16,11 @@ const winningCombinations = [
 let board;
 let turn = 'X';
 let win;
-
 /*----- cached element references -----*/
 const squares = Array.from(document.querySelectorAll('#speelbord div'));
-
 const messages = document.querySelector('h2');
-console.log(squares);
 /*----- event listeners -----*/
 document.getElementById('speelbord').addEventListener('click', handleTurn);
-
 document.getElementById('reset-button').addEventListener('click', init);
 /*----- functions -----*/
 
@@ -42,19 +38,34 @@ init();
 function render() {
     board.forEach(function(mark, index) {
         squares[index].textContent = mark;
-        //console.log(mark, squares[index]);
+        if (squares[index].innerHTML === 'X') {
+            squares[index].style.color = 'red';
+        } else if (squares[index].innerHTML === 'O') {
+            squares[index].style.color = 'black';
+        }
     });
 
     if (turn === 'X') {
-        if (win === 'T') { messages.textContent = 'het is gelijkspel!' } else {
-            messages.textContent = win ? `${win} heeft gewonnen!` : `Het is de beurt aan het ${turn}-je!`;
+        messages.textContent = `Het is de beurt aan het ${turn} - je!`;
+
+        if (win === 'T') {
+            messages.textContent = 'het is gelijkspel!';
+            alert("Cats game!");
+        } else if (win === 'X' || win === 'O') {
+            messages.textContent = win ? `${win} heeft gewonnen!` : `Het is de beurt aan het ${turn} - tje!`;
+            alert(win + " has won!");
         }
     } else {
-        if (win === 'T') { messages.textContent = 'het is gelijkspel!' } else {
-            messages.textContent = win ? `${win} heeft gewonnen!` : `Het is de beurt aan het ${turn}-tje!`;
+        messages.textContent = `Het is de beurt aan het ${turn} - tje!`;
+
+        if (win === 'T') {
+            messages.textContent = 'het is gelijkspel!'
+            alert("Cats game!");
+        } else if (win === 'X' || win === 'O') {
+            messages.textContent = `${win} heeft gewonnen!`;
+            alert(win + " has won!");
         }
     }
-
 }
 
 function handleTurn(event) {
@@ -81,7 +92,7 @@ function getWinner() {
             board[combination[0]] === board[combination[2]])
             winner = board[combination[0]];
     });
-    console.log(winner);
+    //console.log("winnaar is: " + winner);
     return winner ? winner : board.includes('') ? null : 'T';
 
-}
+};
